@@ -1,12 +1,15 @@
 
 
 import gi
+import subprocess
+import time
+import sys
+import signal
 
-gi.require_version('Gtk','3.0')
-
+from subprocess import Popen, PIPE
 from gi.repository import Gtk as gtk
 
-
+gi.require_version('Gtk','3.0')
 
 
 class Main:
@@ -52,6 +55,56 @@ class Main:
         command = 'dd if=/dev/zero of='+str(drivePath)+' bs='+str(blockSize)+' status=progress'
 
         print(command)
+
+
+        dd = ['dd', 'if=/tmp/test.txt', 'of='+drivePath,'bs='+blockSize,'status=progress']
+        # while dd.poll() is None:
+            # time.sleep(.3)
+            # dd.send_signal(signal.SIGUSR1)
+            # while 1:
+                # l = dd.stderr.readline()
+                # if 'records in' in l:
+                    # print l[:l.index('+')], 'records',
+                # if 'bytes' in l:
+                    # print l.strip(), '\r',
+                    # break
+        # print dd.stderr.read(),
+
+        # process = subprocess.Popen(dd, stderr=subprocess.STDOUT)
+
+        # line = ''
+        # while True:
+        #     out = process.stderr.read(1)
+        #     if out == '' and process.poll() != None:
+        #         break
+        #     if out != '':
+        #         s = out.decode("utf-8")
+        #         if s == '\r':
+        #             print(line)
+        #             ddOut = self.builder.get_object('ddOut')
+        #             ddOut.set_text(line)
+        #             line = ''
+        #         else:
+        #             line = line + s
+
+        while True:
+            out = subprocess.check_output(dd).decode(sys.stdout.encoding)
+            ddOut = self.builder.get_object('ddOut')
+            ddOut.set_label(out)
+            print(out)
+
+            poll = out.poll()
+            if poll is None:
+                # process is alive
+                pass
+            else:
+                # process has ended
+                break
+
+
+
+
+
 
 
 

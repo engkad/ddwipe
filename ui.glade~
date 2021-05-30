@@ -86,6 +86,11 @@ include: checkbox to disable warning on startup</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-media-play</property>
   </object>
+  <object class="GtkImage" id="stopIMG">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-media-stop</property>
+  </object>
   <object class="GtkWindow" id="main">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">ddwipe</property>
@@ -93,7 +98,6 @@ include: checkbox to disable warning on startup</property>
     <property name="default_width">750</property>
     <property name="default_height">300</property>
     <property name="icon_name">drive-harddisk</property>
-    <property name="accept_focus">False</property>
     <property name="gravity">center</property>
     <child type="titlebar">
       <placeholder/>
@@ -203,6 +207,7 @@ include: checkbox to disable warning on startup</property>
                         <property name="can_focus">False</property>
                         <property name="has_entry">True</property>
                         <items>
+                          <item translatable="yes">/tmp/test.tmp</item>
                           <item translatable="yes">/dev/sdb</item>
                           <item translatable="yes">/dev/sdc</item>
                           <item translatable="yes">/dev/sdd</item>
@@ -337,7 +342,7 @@ include: checkbox to disable warning on startup</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="ddOut">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Output of dd status=progress</property>
@@ -345,6 +350,7 @@ include: checkbox to disable warning on startup</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
+                        <property name="padding">4</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
@@ -378,11 +384,6 @@ include: checkbox to disable warning on startup</property>
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkImage" id="stopIMG">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-media-stop</property>
   </object>
   <object class="GtkWindow" id="warning">
     <property name="can_focus">False</property>
