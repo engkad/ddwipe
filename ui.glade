@@ -57,17 +57,130 @@
     <property name="can_focus">False</property>
     <property name="stock">gtk-add</property>
   </object>
-  <object class="GtkWindow" id="options">
+  <object class="GtkDialog" id="optionsDialog">
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Options</property>
+    <property name="icon_name">gtk-preferences</property>
+    <property name="type_hint">dialog</property>
     <child type="titlebar">
       <placeholder/>
     </child>
-    <child>
-      <object class="GtkLabel">
-        <property name="visible">True</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">include: checkbox to enable sda as a default option
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">include: checkbox to enable sda as a default option
 include: checkbox to disable warning on startup</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="inputFile">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="has_entry">True</property>
+                <items>
+                  <item translatable="yes">/dev/zero</item>
+                  <item translatable="yes">/dev/urandom</item>
+                </items>
+                <child internal-child="entry">
+                  <object class="GtkEntry" id="inputEntry">
+                    <property name="can_focus">False</property>
+                    <property name="editable">False</property>
+                    <property name="text" translatable="yes">/dev/zero</property>
+                    <property name="caps_lock_warning">False</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkCheckButton" id="enableSDA">
+                    <property name="label" translatable="yes">Enable /dev/sda as default option</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="disableWarning">
+                    <property name="label" translatable="yes">Disable warning on startup</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
       </object>
     </child>
   </object>
@@ -129,7 +242,7 @@ include: checkbox to disable warning on startup</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="editDefaults">
+              <object class="GtkButton" id="optionsButton">
                 <property name="label" translatable="yes">Options</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -213,6 +326,7 @@ include: checkbox to disable warning on startup</property>
                           <item translatable="yes">/dev/sdd</item>
                           <item translatable="yes">/dev/sde</item>
                           <item translatable="yes">/dev/sdf</item>
+                          <item translatable="yes">/dev/null</item>
                         </items>
                         <child internal-child="entry">
                           <object class="GtkEntry" id="driveEntry">
@@ -341,15 +455,16 @@ include: checkbox to disable warning on startup</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="ddOut">
+                      <object class="GtkTextView" id="outputView">
                         <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Output of dd status=progress</property>
+                        <property name="can_focus">True</property>
+                        <property name="editable">False</property>
+                        <property name="cursor_visible">False</property>
+                        <property name="accepts_tab">False</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="padding">4</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
@@ -387,12 +502,12 @@ include: checkbox to disable warning on startup</property>
   <object class="GtkWindow" id="warning">
     <property name="can_focus">False</property>
     <property name="has_focus">True</property>
+    <property name="title" translatable="yes">Warning</property>
     <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="default_width">200</property>
     <property name="default_height">100</property>
     <property name="destroy_with_parent">True</property>
-    <property name="icon_name">dialog-error</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="urgency_hint">True</property>
     <child type="titlebar">
@@ -405,6 +520,7 @@ include: checkbox to disable warning on startup</property>
         <property name="has_focus">True</property>
         <property name="is_focus">True</property>
         <property name="label" translatable="yes">This program uses the dd command (aptly nicknamed "disk destroyer") and it WILL wipe your data. Use this program at your own risk.</property>
+        <property name="justify">center</property>
         <property name="wrap">True</property>
         <attributes>
           <attribute name="style" value="normal"/>
