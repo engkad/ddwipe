@@ -331,7 +331,6 @@ include: checkbox to disable warning on startup</property>
                         <child internal-child="entry">
                           <object class="GtkEntry" id="driveEntry">
                             <property name="can_focus">True</property>
-                            <property name="text" translatable="yes">/dev/null</property>
                             <property name="overwrite_mode">True</property>
                             <property name="placeholder_text" translatable="yes">Select a drive or enter custom path</property>
                           </object>
@@ -511,7 +510,6 @@ include: checkbox to disable warning on startup</property>
     <property name="destroy_with_parent">True</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="urgency_hint">True</property>
-    <property name="decorated">False</property>
     <child type="titlebar">
       <placeholder/>
     </child>
